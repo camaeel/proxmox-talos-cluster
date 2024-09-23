@@ -1,0 +1,26 @@
+%{ if auth0_oidc_enabled }
+cluster:
+  apiServer:
+    extraArgs:
+      oidc-issuer-url: ${ oidc_issuer }
+      oidc-client-id: ${ oidc_client_id }
+      oidc-groups-claim: ${ oidc_group_claim }
+      %{ if oidc_group_prefix != null }
+      oidc-groups-prefix: ${ oidc_group_prefix }
+      %{ endif }
+  inlineManifests:
+    - name: admin-oidc-binding
+      contents: |
+        kind: ClusterRoleBinding
+        apiVersion: rbac.authorization.k8s.io/v1
+        metadata:
+          name: admin-oidc-binding
+        subjects:
+        - kind: Group
+          name: ${ oidc_group_prefix }${ oidc_admin_group }
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: cluster-admin
+%{ endif }
+

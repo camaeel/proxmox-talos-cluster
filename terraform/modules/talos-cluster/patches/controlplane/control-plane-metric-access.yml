@@ -1,0 +1,9 @@
+cluster:
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+      authorization-always-allow-paths: "/healthz,/readyz,/livez,/metrics"
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+      authorization-always-allow-paths: "/healthz,/readyz,/livez,/metrics"

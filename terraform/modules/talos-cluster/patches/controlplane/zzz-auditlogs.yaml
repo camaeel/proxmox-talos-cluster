@@ -1,0 +1,63 @@
+cluster:
+  apiServer:
+    # extraArgs:
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1 # This is required.
+      kind: Policy
+      # Don't generate audit events for all requests in RequestReceived stage.
+      omitStages:
+        - "RequestReceived"
+      rules:
+        - level: None
+          verbs: ["get", "watch", "list"]
+
+        - level: None
+          resources:
+            - group: "" # core
+              resources: ["events"]
+            - group: "events.k8s.io"
+              resources: ["events"]
+        - level: None
+          users:
+            - "system:kube-scheduler"
+            - "system:kube-proxy"
+            - "system:apiserver"
+            - "system:kube-controller-manager"
+        - level: None
+          userGroups: ["system:serviceaccounts:kube-system"]
+        - level: None
+          userGroups: ["system:nodes"]
+        - level: None
+          users: ["system:apiserver"]
+          verbs: ["get"]
+          resources:
+            - group: "" # core
+              resources: ["namespaces"]
+        # Don't log these read-only URLs.
+        - level: None
+          nonResourceURLs:
+            - /healthz*
+            - /version
+            - /swagger*
+            - /openapi/v2*
+            - /readyz*
+            - /livez*
+            - /metrics
+
+        - level: Metadata
+          resources:
+            - group: ""  # core
+              resources: ["secrets", "configmaps"]
+            - group: authentication.k8s.io
+              resources: ["tokenreviews"]
+
+        - level: None
+          resources:
+            # - group: "apiregistration.k8s.io"
+            - group: "coordination.k8s.io"
+        # - level: Request
+        #   verbs: ["create", "delete", "update", "patch"]
+        #   resources:
+        #     - group: ""  # core
+        #       resources: ["persistentvolumeclaims", "persistentvolumes"]
+        - level: Metadata

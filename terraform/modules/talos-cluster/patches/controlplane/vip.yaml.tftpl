@@ -1,0 +1,8 @@
+%{ if cluster_endpoint_vip != null }
+machine:
+  network:
+    interfaces:
+      - interface: eth0
+        vip:
+          ip: ${cluster_endpoint_vip}
+%{endif}

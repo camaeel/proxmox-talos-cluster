@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "timezone": "Europe/Warsaw",
+  "schedule": [
+    "after 10am",
+    "before 10pm"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "versioning": "pep440"
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "Update versions in terragrunt.hcl",
+      "fileMatch": [
+        "/terragrunt\\.hcl$",
+        "/_shared/.*\\.hcl$"
+      ],
+      "matchStrings": [
+        "#\\s?renovate:(?: datasource=(?<datasource>.+?))? depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s.+?_version\\s?=\\s?\"?(?<currentValue>.+?)\"?\\s"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}terragrunt{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  }
+}

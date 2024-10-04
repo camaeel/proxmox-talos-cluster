@@ -12,11 +12,11 @@ output "topology_region" {
 }
 
 output "api_server_endpoint" {
-  value = data.talos_cluster_kubeconfig.kubeconfig.kubernetes_client_configuration.host
+  value = talos_cluster_kubeconfig.kubeconfig.kubernetes_client_configuration.host
 }
 
 output "api_server_ca_certificate" {
-  value = data.talos_cluster_kubeconfig.kubeconfig.kubernetes_client_configuration.ca_certificate
+  value = talos_cluster_kubeconfig.kubeconfig.kubernetes_client_configuration.ca_certificate
 }
 
 output "oidc_issuer" {

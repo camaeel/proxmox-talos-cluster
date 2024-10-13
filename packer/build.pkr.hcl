@@ -29,7 +29,7 @@ build {
 
   post-processor "shell-local" {
     inline = [
-      "rm ~/.cache/packer/ssh_private_key_packer_rsa.pem",
+      "rm ${data.sshkey.temporary.private_key_path}",
     ]
   }
   post-processor "manifest" {}

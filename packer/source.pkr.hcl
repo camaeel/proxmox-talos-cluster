@@ -52,7 +52,6 @@ source "proxmox-iso" "builder" {
   cores    = var.cores
   cpu_type = "host"
   os       = "l26"
-  # cloud_init = false
 
   network_adapters {
     model= "virtio"
@@ -68,10 +67,8 @@ source "proxmox-iso" "builder" {
   template_description = "Talos ${var.talos_version} template, schematic_id=TODO, generated on ${timestamp()}"
   template_name        = "talos-nocloud-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
 
-
- # This is managed by source in build
- # node = "osiris"
-
+ # This is managed by source in build, so template is built for multiple nodes
+ # node = "proxmox_node_name"
 
   #proxmox creds
   insecure_skip_tls_verify = false

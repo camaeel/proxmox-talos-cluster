@@ -31,7 +31,15 @@ build {
       "rm ${data.sshkey.temporary.private_key_path}",
     ]
   }
-  post-processor "manifest" {}
+  post-processor "manifest" {
+    custom_data = {
+      schematic_id = local.schematic_id
+      talos_version = var.talos_version
+      proxmox_node = "{{ build_name }}"
+      architecture = var.architecture
+      talos_disk_image_flavour = var.talos_disk_image_flavour
+    }
+  }
 #   post-processor "shell-local" {
 #     # when https://github.com/hashicorp/packer-plugin-proxmox/issues/193 is released (version >1.1.5)
 #     inline = [

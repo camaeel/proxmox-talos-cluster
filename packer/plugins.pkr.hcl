@@ -1,8 +1,12 @@
 packer {
   required_plugins {
-    name = {
-      version = "~> 1"
+    proxmox = {
+      version = "~> 1.0"
       source  = "github.com/hashicorp/proxmox"
+    }
+    sshkey = {
+      version = "~> 1.0"
+      source = "github.com/ivoronin/sshkey"
     }
   }
 }

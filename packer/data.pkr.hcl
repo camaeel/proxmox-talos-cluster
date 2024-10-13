@@ -1,0 +1,2 @@
+data "sshkey" "temporary" {
+}

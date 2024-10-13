@@ -1,0 +1,60 @@
+#cloud-config
+manage_etc_hosts: false
+chpasswd:
+  expire: True
+disable_root: true
+users:
+  - name: ubuntu
+    groups: [sudo]
+    lock_passwd: true
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+package_reboot_if_required: true
+package_update: true
+package_upgrade: false
+packages:
+  - apt:
+    - qemu-guest-agent
+    - openssh-server
+    - curl
+runcmd:
+- systemctl start ssh
+- systemctl start qemu-guest-agent
+# The modules that run in the 'config' stage
+cloud_config_modules:
+  - snap
+  - ubuntu_autoinstall
+  - ssh_import_id
+  - keyboard
+  - locale
+  - set_passwords
+  - grub_dpkg
+  - apt_pipelining
+  - apt_configure
+  - ntp
+  - timezone
+  - byobu
+  - runcmd
+
+# The modules that run in the 'final' stage
+cloud_final_modules:
+  - package_update_upgrade_install
+  - fan
+  - landscape
+  - ubuntu_drivers
+  - write_files_deferred
+  - mcollective
+  - reset_rmc
+  - scripts_vendor
+  - scripts_per_once
+  - scripts_per_boot
+  - scripts_per_instance
+  - scripts_user
+  - ssh_authkey_fingerprints
+  - keys_to_console
+  - install_hotplug
+  - final_message
+  - power_state_change

@@ -65,9 +65,11 @@ source "proxmox-iso" "builder" {
   vm_name = "talos-${var.talos_version}-builder"
   tags = join(";", sort([
     "talos-image-${var.talos_version}",
-    "schematic-id-${local.schematic_id}"
+    "schematic-id-${local.schematic_id}",
+    "flavour-${var.talos_disk_image_flavour}"
   ]))
 
+  template_name        = "talos-${var.talos_disk_image_flavour}-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
   template_description = <<EOF
 # Talos ${var.talos_version} template #
 
@@ -80,7 +82,6 @@ image factory query (simplified):
 ${yamlencode(var.schematic_customization)}
 ```
 EOF
-  template_name        = "talos-${var.talos_disk_image_flavour}-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
 
  # This is managed by source in build, so template is built for multiple nodes
  # node = "proxmox_node_name"

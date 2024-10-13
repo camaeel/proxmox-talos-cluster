@@ -63,8 +63,12 @@ source "proxmox-iso" "builder" {
 
   # vm identification
   vm_name = "talos-${var.talos_version}-builder"
-#   tags = "some;some-other;TODO"
-  template_description = "Talos ${var.talos_version} template, schematic_id=TODO, generated on ${timestamp()}"
+  tags = join(";", sort([
+    "talos-image-${var.talos_version}",
+    "schematic-id-${local.schematic_id}"
+  ]))
+
+  template_description = "Talos ${var.talos_version} template,\n schematic_id=${local.schematic_id},\ngenerated on ${timestamp()}\ndisk_image=${local.talos_disk_image_url}"
   template_name        = "talos-nocloud-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
 
  # This is managed by source in build, so template is built for multiple nodes

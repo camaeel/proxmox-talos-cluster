@@ -4,6 +4,16 @@ variable "talos_version" {
   default = "v1.8.1"
 }
 
+variable "talos_disk_image_flavour" {
+  type = string
+  default = "nocloud"
+}
+
+variable "architecture" {
+  type = string
+  default = "amd64"
+}
+
 variable "cores" {
   type    = number
   default = 2
@@ -88,7 +98,7 @@ variable "target_disk_config" {
     format = "raw"
     disk_size = "3G"
     io_thread = false
-    cache_mode = "writethrough"
+    cache_mode = null
     discard = true
   }
 }
@@ -96,4 +106,18 @@ variable "target_disk_config" {
 variable "target_device" {
   type = string
   default = "/dev/vda"
+}
+
+variable "schematic_customization" {
+  type = object({
+    official_extensions = list(string)
+    extraKernelArgs = list(string)
+  })
+  default = {
+    official_extensions = [
+      "siderolabs/amd-ucode",
+      "siderolabs/qemu-guest-agent"
+    ]
+    extraKernelArgs = []
+  }
 }

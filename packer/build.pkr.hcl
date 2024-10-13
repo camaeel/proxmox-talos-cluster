@@ -21,9 +21,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      "df -h"
-      # "curl -s -L ${local.image} -o /tmp/talos.raw.xz",
-      # "xz -d -c /tmp/talos.raw.xz | dd of=${var.target_device} && sync",
+      "curl -s -L ${local.talos_disk_image_url} -o /tmp/talos.raw.xz",
+      "xz -d -c /tmp/talos.raw.xz | sudo dd of=${var.target_device} && sync",
     ]
   }
 

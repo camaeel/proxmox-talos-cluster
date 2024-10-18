@@ -49,7 +49,7 @@ variable "proxmox_nodes" {
 
 variable "proxmox_url" {
   type = string
-  default = null
+  default = env("PROXMOX_URL")
   description = "Set it to API URL https://<server>:<port>/api2/json. Alternatievely set PROXMOX_URL env var."
 }
 
@@ -69,6 +69,12 @@ variable "proxmox_token" {
   type = string
   default = null
   description = "Proxmox token. Alternatievely set PROXMOX_TOKEN env var."
+}
+
+variable "proxmox_insecure_skip_tls_verify" {
+  type = bool
+  default = false
+  description = "Skip TLS verification for proxmox server"
 }
 
 variable "network_config" {
@@ -120,4 +126,10 @@ variable "schematic_customization" {
     ]
     extraKernelArgs = []
   }
+}
+
+variable "keep_images" {
+  type = number
+  description = "Number of matching images per host to keep"
+  default = 1
 }

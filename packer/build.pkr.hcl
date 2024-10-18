@@ -7,8 +7,7 @@ build {
     # iterator = "iter"
     content {
       node = source.key
-
-      name = "build-${source.key}"
+      name = source.key
     }
   }
 
@@ -40,10 +39,7 @@ build {
       talos_disk_image_flavour = var.talos_disk_image_flavour
     }
   }
-#   post-processor "shell-local" {
-#     # when https://github.com/hashicorp/packer-plugin-proxmox/issues/193 is released (version >1.1.5)
-#     inline = [
-#       "python3 ./scripts/clean_old_builds.py ${var.proxmox_host} ${join(",",var.tags)} ${var.keep_images}",
-#     ]
-#   }
+  post-processor "shell-local" {
+    command = "source .venv/bin/activate && python3 ./scripts/clean_old_builds.py ${local.proxmox_host} ${ source.name } ${join(",",local.cleanup_tag_selector)} ${var.keep_images}"
+  }
 }

@@ -63,11 +63,7 @@ source "proxmox-iso" "builder" {
 
   # vm identification
   vm_name = "talos-${var.talos_version}-builder"
-  tags = join(";", sort([
-    "talos-image-${var.talos_version}",
-    "schematic-id-${local.schematic_id}",
-    "flavour-${var.talos_disk_image_flavour}"
-  ]))
+  tags = join(";", sort(local.tags))
 
   template_name        = "talos-${var.talos_disk_image_flavour}-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
   template_description = <<EOF
@@ -87,7 +83,7 @@ EOF
  # node = "proxmox_node_name"
 
   #proxmox creds
-  insecure_skip_tls_verify = false
+  insecure_skip_tls_verify = var.proxmox_insecure_skip_tls_verify
   proxmox_url = var.proxmox_url #or set PROXMOX_URL env
   username = var.proxmox_username
   password = var.proxmox_password

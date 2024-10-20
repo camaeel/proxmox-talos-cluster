@@ -45,7 +45,6 @@ source "proxmox-iso" "builder" {
   qemu_agent = true
   ssh_username = "ubuntu"
   ssh_private_key_file = data.sshkey.temporary.private_key_path
-  # ssh_private_key_file = ssh_private_key_file
 
   # instance shape
   memory   = var.memory
@@ -59,7 +58,6 @@ source "proxmox-iso" "builder" {
     vlan_tag = var.network_config.vlan_tag
     firewall = false
   }
-
 
   # vm identification
   vm_name = "talos-${var.talos_version}-builder"

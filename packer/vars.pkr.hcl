@@ -24,17 +24,14 @@ variable "memory" {
   default = 1024
 }
 
-#https://www.alpinelinux.org/cloud/
 variable "builder_iso_url" {
   type    = string
-#   default = "https://dl-cdn.alpinelinux.org/alpine/v3.20/releases/x86_64/alpine-virt-3.20.3-x86_64.iso"
-#   default = "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-12.7.0-amd64-standard.iso"
   default = "https://releases.ubuntu.com/noble/ubuntu-24.04.1-live-server-amd64.iso"
 }
 
 variable "builder_iso_checksum_url" {
   type = string
-  default = null
+  default = "https://releases.ubuntu.com/noble/SHA256SUMS"
 }
 
 variable "builder_iso_storage_pool" {

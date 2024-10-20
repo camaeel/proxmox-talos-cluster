@@ -1,0 +1,4 @@
+.env
+downloaded_iso_path
+packer-manifest.json
+.venv

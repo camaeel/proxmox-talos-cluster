@@ -1,0 +1,3 @@
+proxmox_nodes = [
+  "osiris"
+]

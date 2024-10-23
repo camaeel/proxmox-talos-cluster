@@ -128,5 +128,5 @@ variable "schematic_customization" {
 variable "keep_images" {
   type = number
   description = "Number of matching images per host to keep"
-  default = 1
+  default = 2
 }

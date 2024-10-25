@@ -33,8 +33,8 @@ source "proxmox-iso" "builder" {
     unmount = true
     iso_storage_pool = "local"
     cd_content = {
-      "meta-data" = templatefile("${path.root}/cloud-init/meta-data.tmpl", {})
-      "user-data" = templatefile("${path.root}/cloud-init/user-data.tmpl.yml", {
+      "meta-data" = templatefile(abspath("${path.root}/cloud-init/meta-data.tmpl"), {})
+      "user-data" = templatefile(abspath("${path.root}/cloud-init/user-data.tmpl.yml"), {
         ssh_public_key = data.sshkey.temporary.public_key
       })
     }

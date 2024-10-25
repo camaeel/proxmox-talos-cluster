@@ -40,6 +40,7 @@ build {
     }
   }
   post-processor "shell-local" {
-    command = "source .venv/bin/activate && python3 ./scripts/clean_old_builds.py ${local.proxmox_host} ${ source.name } ${join(",",local.cleanup_tag_selector)} ${var.keep_images}"
+    command = "source .venv/bin/activate && python3 ${abspath("${path.root}/scripts/clean_old_builds.py")} ${local.proxmox_host} ${ source.name } ${join(",",local.cleanup_tag_selector)} ${var.keep_images}"
+
   }
 }

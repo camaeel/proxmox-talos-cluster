@@ -17,13 +17,24 @@
   ],
   "customManagers": [
     {
-      "description": "Update versions in pkrvars.hcl",
+      "description": "Update versions in *.pkrvars.hcl",
       "fileMatch": [
-        "/packer/.*\\.pkrvars\\.hcl$",
-        "/packer/vars\\.pkr\\.hcl$"
+        "/packer/.*\\.pkrvars\\.hcl$"
       ],
       "matchStrings": [
         "#\\s?renovate:(?: datasource=(?<datasource>.+?))? depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s.+?_version\\s?=\\s?\"?(?<currentValue>.+?)\"?\\s"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}gitlab-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}"
+    },
+    {
+      "description": "Update versions in vars.pkr.hcl",
+      "fileMatch": [
+        "vars\\.pkr\\.hcl$"
+      ],
+      "matchStrings": [
+        "#\\s?renovate:(?: datasource=(?<datasource>.+?))? depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s+default\\s?=\\s?\"?(?<currentValue>.+?)\"?\\s"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}gitlab-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",

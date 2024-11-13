@@ -19,7 +19,8 @@
     {
       "description": "Update versions in pkrvars.hcl",
       "fileMatch": [
-        "/packer/.*\\.pkrvars\\.hcl$"
+        "/packer/.*\\.pkrvars\\.hcl$",
+        "/packer/vars\\.pkr\\.hcl$"
       ],
       "matchStrings": [
         "#\\s?renovate:(?: datasource=(?<datasource>.+?))? depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s.+?_version\\s?=\\s?\"?(?<currentValue>.+?)\"?\\s"

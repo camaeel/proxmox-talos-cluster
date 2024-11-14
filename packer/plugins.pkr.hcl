@@ -8,7 +8,7 @@ packer {
     sshkey = {
       source = "github.com/ivoronin/sshkey"
       # renovateplugins: depName=ivoronin/packer-plugin-sshkey
-      version = "~> 1.0"
+      version = "v1.2.1"
     }
     external = {
       source  = "github.com/joomcode/external"

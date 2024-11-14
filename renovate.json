@@ -39,6 +39,16 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}gitlab-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
       "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}"
+    },
+    {
+      "description": "Update packer plugins",
+      "fileMatch": [
+        ".*\\.pkr\\.hcl$"
+      ],
+      "matchStrings": [
+        "renovateplugins: (\\s*sourceUrl=(?<sourceUrl>[^\\s]+)){0,1}(\\s*datasource=(?<datasource>[^\\s]+)){0,1}(\\s*depName=(?<depName>[^\\s]+))*\\n.*= \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases"
     }
   ],
   "lockFileMaintenance": {

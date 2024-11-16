@@ -3,23 +3,23 @@
 source "proxmox-iso" "builder" {
   # iso
   boot_iso {
-    iso_url = var.builder_iso_url
+    iso_url          = var.builder_iso_url
     iso_storage_pool = var.builder_iso_storage_pool
-    type    = "ide"
-    unmount = true
-    iso_checksum = var.builder_iso_checksum_url != null ? "file:${var.builder_iso_checksum_url}" : "file:${var.builder_iso_url}.sha256"
+    type             = "ide"
+    unmount          = true
+    iso_checksum     = var.builder_iso_checksum_url != null ? "file:${var.builder_iso_checksum_url}" : "file:${var.builder_iso_url}.sha256"
     iso_download_pve = true #download directly to PVE
   }
 
   #target disk
   disks {
-    type              = var.target_disk_config.type
-    storage_pool      = var.target_disk_config.storage_pool
-    format            = var.target_disk_config.format
-    disk_size         = var.target_disk_config.disk_size
-    io_thread         = var.target_disk_config.io_thread
-    cache_mode        = var.target_disk_config.cache_mode
-    discard           = var.target_disk_config.discard
+    type         = var.target_disk_config.type
+    storage_pool = var.target_disk_config.storage_pool
+    format       = var.target_disk_config.format
+    disk_size    = var.target_disk_config.disk_size
+    io_thread    = var.target_disk_config.io_thread
+    cache_mode   = var.target_disk_config.cache_mode
+    discard      = var.target_disk_config.discard
   }
 
   boot_wait = "20s"
@@ -30,7 +30,7 @@ source "proxmox-iso" "builder" {
   task_timeout = "5m"
 
   additional_iso_files {
-    unmount = true
+    unmount          = true
     iso_storage_pool = "local"
     cd_content = {
       "meta-data" = templatefile(abspath("${path.root}/cloud-init/meta-data.tmpl"), {})
@@ -42,8 +42,8 @@ source "proxmox-iso" "builder" {
   }
 
   # connection
-  qemu_agent = true
-  ssh_username = "ubuntu"
+  qemu_agent           = true
+  ssh_username         = "ubuntu"
   ssh_private_key_file = data.sshkey.temporary.private_key_path
 
   # instance shape
@@ -53,15 +53,15 @@ source "proxmox-iso" "builder" {
   os       = "l26"
 
   network_adapters {
-    model= "virtio"
-    bridge = var.network_config.bridge
+    model    = "virtio"
+    bridge   = var.network_config.bridge
     vlan_tag = var.network_config.vlan_tag
     firewall = false
   }
 
   # vm identification
   vm_name = "talos-${var.talos_version}-builder"
-  tags = join(";", sort(local.tags))
+  tags    = join(";", sort(local.tags))
 
   template_name        = "talos-${var.talos_disk_image_flavour}-${var.talos_version}.${formatdate("YYYYMMDD-hhmmss", timestamp())}"
   template_description = <<EOF
@@ -77,13 +77,13 @@ ${yamlencode(var.schematic_customization)}
 ```
 EOF
 
- # This is managed by source in build, so template is built for multiple nodes
- # node = "proxmox_node_name"
+  # This is managed by source in build, so template is built for multiple nodes
+  # node = "proxmox_node_name"
 
   #proxmox creds
   insecure_skip_tls_verify = var.proxmox_insecure_skip_tls_verify
-  proxmox_url = var.proxmox_url #or set PROXMOX_URL env
-  username = var.proxmox_username
-  password = var.proxmox_password
-  token = var.proxmox_token
+  proxmox_url              = var.proxmox_url #or set PROXMOX_URL env
+  username                 = var.proxmox_username
+  password                 = var.proxmox_password
+  token                    = var.proxmox_token
 }

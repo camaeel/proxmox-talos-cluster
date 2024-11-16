@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     proxmox = {
-      source  = "github.com/hashicorp/proxmox"
+      source = "github.com/hashicorp/proxmox"
       # renovateplugins: depName=hashicorp/packer-plugin-proxmox
       version = "~> 1.2"
     }
@@ -11,7 +11,7 @@ packer {
       version = "~> 1.2"
     }
     external = {
-      source  = "github.com/joomcode/external"
+      source = "github.com/joomcode/external"
       # renovateplugins: depName=joomcode/packer-plugin-external
       version = ">= 0.0.3"
     }

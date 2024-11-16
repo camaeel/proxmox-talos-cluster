@@ -24,6 +24,6 @@ data "external-raw" "schematic_id" {
 }
 
 locals {
-  schematic_id = jsondecode(data.external-raw.schematic_id.result).id
+  schematic_id         = jsondecode(data.external-raw.schematic_id.result).id
   talos_disk_image_url = "https://factory.talos.dev/image/${local.schematic_id}/${var.talos_version}/${var.talos_disk_image_flavour}-${var.architecture}.raw.xz"
 }

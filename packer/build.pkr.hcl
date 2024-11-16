@@ -3,7 +3,7 @@ build {
   # var.proxmox_nodes
   dynamic "source" {
     for_each = convert(var.proxmox_nodes, set(string))
-    labels = [ "source.proxmox-iso.builder"]
+    labels   = ["source.proxmox-iso.builder"]
     # iterator = "iter"
     content {
       node = source.key
@@ -32,15 +32,15 @@ build {
   }
   post-processor "manifest" {
     custom_data = {
-      schematic_id = local.schematic_id
-      talos_version = var.talos_version
-      proxmox_node = "{{ build_name }}"
-      architecture = var.architecture
+      schematic_id             = local.schematic_id
+      talos_version            = var.talos_version
+      proxmox_node             = "{{ build_name }}"
+      architecture             = var.architecture
       talos_disk_image_flavour = var.talos_disk_image_flavour
     }
   }
   post-processor "shell-local" {
-    command = "source .venv/bin/activate && python3 ${abspath("${path.root}/scripts/clean_old_builds.py")} ${local.proxmox_host} ${ source.name } ${join(",",local.cleanup_tag_selector)} ${var.keep_images}"
+    command = "source .venv/bin/activate && python3 ${abspath("${path.root}/scripts/clean_old_builds.py")} ${local.proxmox_host} ${source.name} ${join(",", local.cleanup_tag_selector)} ${var.keep_images}"
 
   }
 }

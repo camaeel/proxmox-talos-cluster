@@ -16,4 +16,5 @@ packer {
       version = ">= 0.0.3"
     }
   }
+  required_version = ">= 1.2.0"
 }

@@ -1,7 +1,7 @@
 variable "talos_version" {
   type = string
   # renovate: datasource=github-releases depName=siderolabs/talos
-  default = "1.9.3"
+  default = "1.9.4"
 }
 
 variable "talos_disk_image_flavour" {

@@ -26,7 +26,7 @@ variable "memory" {
 
 variable "builder_iso_url" {
   type    = string
-  default = "https://releases.ubuntu.com/noble/ubuntu-24.04.1-live-server-amd64.iso"
+  default = "https://releases.ubuntu.com/noble/ubuntu-24.04.2-live-server-amd64.iso"
 }
 
 variable "builder_iso_checksum_url" {
